@@ -1,6 +1,8 @@
 # Card-Match-Test
  Cyber speed test
-
- I have already developed same game from the scratch and which was assosiated with another company. 
- I took the leverage of using the same code as i own it. 
- I have used some helper classes which is developed by my self and collegue while developing games it is handy code and did not used any third party plugin except iTween which I used it for animating objects.
+ 
+I have previously developed a similar game independently, which was associated with a different company. 
+I've leveraged the use of the same codebase, as I have ownership rights to it. 
+During the development process, my colleague and I created several helper classes tailored for game development purposes. 
+These classes have proven to be quite useful. It's worth noting that besides iTween, which I utilized for object animations, we haven't incorporated any third-party plugins into the project.
+ 
