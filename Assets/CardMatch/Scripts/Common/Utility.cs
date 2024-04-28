@@ -4,57 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[System.Serializable]
-public class WebRequestData
+public class Utility
 {
-    public string customer_id;
-    public string card_no;
-    public string account_id;
-    public string site_id;
-    public int win_status;
-    public int game_id;
-
-}
-
-[System.Serializable]
-public class WebResponseData
-{
-    public int code;
-    public string message;
-    public string data;
-}
-public class Utility : MonoBehaviour
-{
-    public const string customer_id = "customer_id";
-    public const string card_no = "card_no";
-    public const string account_id = "account_id";
-    public const string site_id = "site_id";
-    /// <summary>
-    /// 1- if customer wins and 0 - if lose
-    /// </summary>
-    public const string win_status = "win_status"; 
-    public const string game_id = "game_id";
-
-    public const string win_time = "win_time";
-    public const string win_score = "win_score";
-    public const string req_score = "win_score";
-    public const string play_time = "win_time";
-
-    public static string _API_URL;
-    public static string API_URL
-    {
-        get
-        {
-            _API_URL = Debug.isDebugBuild ? "http://45.76.160.100:8065/customer/createtxn" : "http://45.76.160.104:8065/customer/createtxn";
-#if isDebug
-            _API_URL = "http://45.76.160.104:8065/customer/createtxn";//UAT
-#else
-            _API_URL = "http://52.172.51.202:8065/customer/createtxn";//PRODUCTION
-#endif
-            return _API_URL;
-        }
-    }
-
+    public static string stageDataPath = Application.persistentDataPath + "/stageData.json";
+    public static string StageDataSavePrefKey = "StageDataSaved";
 
     public static Dictionary<string, string> GetParametersFromURL(string url)
     {
@@ -78,7 +31,7 @@ public class Utility : MonoBehaviour
         {
             s += string.Format("{0} = {1}\n", pair.Key, pair.Value);
         }
-        print(s);
+        Debug.Log(s);
         return pairs;
     }
 }

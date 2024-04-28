@@ -8,14 +8,15 @@ public class Item : MonoBehaviour
 
     public bool isFlipped;
 
-    private void OnEnable()
+
+    public void Init()
     {
         name = index + "";
+        graphic.Init();
     }
 
     public void BtnClick()
     {
-        //if (!ItemsHandler.inst.canClick) return;
         if (isFlipped) return;
         animator.SetTrigger("Flip");
         isFlipped = true;
@@ -40,5 +41,6 @@ public class Item : MonoBehaviour
                 if(item) item.gameObject.SetActive(false);
             }, 0.7f);
         }
+        ItemsHandler.inst.UpdateStageData(transform.GetSiblingIndex());
     }
 }

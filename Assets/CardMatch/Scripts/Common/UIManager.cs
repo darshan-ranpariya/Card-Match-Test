@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     public GameObject loader;
     public uString gameOverMsg;
     public uString gameWinMsg;
-    public int winScore;
+    //public int winScore;
     public uNumber currScore;
     public uNumber highScore;
     public Image fillImg;
@@ -46,9 +46,29 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        winScore = GameStatics.winScore;
-        currTime = totalTime = GameStatics.timeToPlay;
-        //StartCoroutine(StartTime());
+        if(PlayerPrefs.GetInt(Utility.StageDataSavePrefKey, 0) != 0)
+        {
+            new Delayed.Action(ItemsHandler.inst.LoadGameSavedData, Time.deltaTime * 2);
+        }
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            if (gamePlayPanel.gameObject.activeInHierarchy && !pausePanel.gameObject.activeInHierarchy)
+            {
+                ItemsHandler.inst.SaveStageData();
+            }
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        if (gamePlayPanel.gameObject.activeInHierarchy && !pausePanel.gameObject.activeInHierarchy)
+        {
+            ItemsHandler.inst.SaveStageData();
+        }
     }
 
     void ResetGame()
@@ -56,7 +76,7 @@ public class UIManager : MonoBehaviour
         gameOverPanel.gameObject.SetActive(false);
         currTime = totalTime;
         currScore.Value = 0;
-        StopCoroutine(timer);
+        if(timer != null) StopCoroutine(timer);
     }
 
 
@@ -90,7 +110,9 @@ public class UIManager : MonoBehaviour
     public void HomeBtnClick()
     {
         ResetGame();
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        if (pausePanel.gameObject.activeInHierarchy) pausePanel.gameObject.SetActive(false);
+        startPanel.Activate();
+        //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void RestartBtnClick()
@@ -147,9 +169,10 @@ public class UIManager : MonoBehaviour
     {
         currScore.Value += score;
         currScore.Value = currScore.Value >= 0 ? currScore.Value : 0;
-        if (currScore.Value >= winScore)
+        if(currScore.Value > highScore.Value)
         {
-            winPanel.Activate();
+            highScore.Value = currScore.Value;
+            PlayerPrefs.SetInt("HighScore", highScore.ValueAsInt);
         }
     }
 }

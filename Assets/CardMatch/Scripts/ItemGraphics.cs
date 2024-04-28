@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,19 +9,18 @@ public class ItemGraphics : MonoBehaviour
     public uImage graphic;
     public Image bgImg;
     public SpriteCollection sprites;
-    [HideInInspector]
     public int spriteIndex;
     
     public Sprite resetSprite;
 
     //public Image bgImg;
 
-    private void Awake()
+    private void OnValidate()
     {
         bgImg = GetComponent<Image>();
     }
 
-    private void OnEnable()
+    internal void Init()
     {
         graphic.Value = sprites.GetSprite(spriteIndex);
         bgImg.sprite = resetSprite;

@@ -31,5 +31,6 @@ public class GridSizeSwitch : MonoBehaviour
     {
         ItemsHandler.inst.OnGridSwitchOn(row, column);
         UIManager.inst.StartGame();
+        sw.Set(false);
     }
 }
